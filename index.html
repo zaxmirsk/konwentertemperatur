@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konwersja Temperatury</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .converter {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input, button, select {
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .logo {
+            margin-top: 30px;
+        }
+        .logo img {
+            width: 120px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="converter">
+        <h1>Konwersja Temperatury</h1>
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <select id="fromUnit">
+                <option value="C">Celsjusz (°C)</option>
+                <option value="F">Fahrenheit (°F)</option>
+                <option value="K">Kelwin (K)</option>
+                <option value="R">Rankine (°R)</option>
+            </select>
+
+            <div style="font-size: 24px; margin: 5px 0;">⬇</div>
+
+            <select id="toUnit">
+                <option value="C">Celsjusz (°C)</option>
+                <option value="F">Fahrenheit (°F)</option>
+                <option value="K">Kelwin (K)</option>
+                <option value="R">Rankine (°R)</option>
+            </select>
+
+            <input type="number" id="inputValue" placeholder="Wprowadź temperaturę" step="any">
+        </div>
+
+        <button onclick="convert()">Konwertuj</button>
+        <div id="result"></div>
+
+       <!-- Logo OBLA -->
+<style>
+  .logo img {
+    width: 290px; /* tutaj możesz zmienić rozmiar */
+    height: auto;  /* zachowanie proporcji */
+  }
+</style>
+
+<div class="logo">
+  <img src="mojelogoobla.jpg.png" alt="Logo OBLA">
+</div>
+
+    <script>
+        function toKelvin(value, fromUnit) {
+            switch (fromUnit) {
+                case "C": return value + 273.15;
+                case "F": return (value - 32) * 5 / 9 + 273.15;
+                case "K": return value;
+                case "R": return value * 5 / 9;
+                default: return NaN;
+            }
+        }
+
+        function fromKelvin(kelvin, toUnit) {
+            switch (toUnit) {
+                case "C": return kelvin - 273.15;
+                case "F": return (kelvin - 273.15) * 9 / 5 + 32;
+                case "K": return kelvin;
+                case "R": return kelvin * 9 / 5;
+                default: return NaN;
+            }
+        }
+
+        function convert() {
+            const inputValue = parseFloat(document.getElementById('inputValue').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+
+            if (isNaN(inputValue)) {
+                document.getElementById('result').innerText = 'Proszę wprowadzić poprawną wartość!';
+                return;
+            }
+
+            if (fromUnit === toUnit) {
+                document.getElementById('result').innerText = `Wynik: ${inputValue.toFixed(2)} °${toUnit}`;
+                return;
+            }
+
+            const kelvin = toKelvin(inputValue, fromUnit);
+            const converted = fromKelvin(kelvin, toUnit);
+
+            document.getElementById('result').innerText = 
+                `${inputValue} °${fromUnit} = ${converted.toFixed(2)} °${toUnit}`;
+        }
+    </script>
+</body>
+</html>
